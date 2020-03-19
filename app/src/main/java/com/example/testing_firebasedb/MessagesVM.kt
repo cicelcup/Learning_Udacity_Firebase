@@ -2,6 +2,7 @@ package com.example.testing_firebasedb
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -20,7 +21,9 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
 
     init {
         val childEventListener = object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {}
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.i("JAPM", "Authentication Error $databaseError")
+            }
 
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
 
@@ -54,7 +57,14 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
         val friendlyMessage = FriendlyMessage(message.get(), "Jorge", null)
 
         //push the value to the database
-        messageReference.push().setValue(friendlyMessage)
+        messageReference.push().setValue(friendlyMessage,
+            DatabaseReference.CompletionListener { databaseError, databaseReference ->
+                Log.i(
+                    "JAPM", "Error: $databaseError." +
+                            " Reference: $databaseReference"
+                )
+
+            })
 
         //clear the edit text
         message.set("")
