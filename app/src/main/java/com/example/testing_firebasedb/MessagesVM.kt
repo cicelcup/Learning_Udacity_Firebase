@@ -10,6 +10,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
+    //variables for the array
+    private val messagesArray = ArrayList<FriendlyMessage>()
+    private val _messagesList = MutableLiveData<List<FriendlyMessage>>()
+    val messagesList: LiveData<List<FriendlyMessage>> = _messagesList
+
     //Firebase variables
     private lateinit var messageReference: DatabaseReference
 
@@ -27,9 +32,11 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
             .child("messages")
 
         //set the friendly Message
-        val friendlyMessage = FriendlyMessage(message.get(), "JAPM", null)
+        val friendlyMessage = FriendlyMessage(message.get(), "Jorge", null)
         //push the value to the database
-        messageReference.push().setValue(friendlyMessage)
+        //messageReference.push().setValue(friendlyMessage)
+        messagesArray.add(friendlyMessage)
+        _messagesList.value = messagesArray
 
         //clear the edit text
         message.set("")

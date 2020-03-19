@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.view.View" />
         <variable
             name="item"
             type="com.example.testing_firebasedb.FriendlyMessage" />
@@ -19,10 +20,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@{item.message}"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemSender"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/item_message" />
 
         <TextView
@@ -30,20 +32,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
             android:text="@{item.sender}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemMessage"
             tools:text="@string/item_sender" />
 
         <ImageView
             android:id="@+id/itemImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{item.photo != null ? View.GONE : View.VISIBLE }"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemMessage"
+            app:layout_constraintTop_toBottomOf="@+id/itemSender"
             android:contentDescription="@string/image_content_description" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
