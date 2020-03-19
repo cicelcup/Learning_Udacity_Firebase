@@ -28,7 +28,6 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
 
         //set the friendly Message
         val friendlyMessage = FriendlyMessage(message.get(), "JAPM", null)
-
         //push the value to the database
         messageReference.push().setValue(friendlyMessage)
 
