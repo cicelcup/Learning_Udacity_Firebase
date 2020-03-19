@@ -6,8 +6,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
     //variables for the array
@@ -16,7 +15,31 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     val messagesList: LiveData<List<FriendlyMessage>> = _messagesList
 
     //Firebase variables
-    private lateinit var messageReference: DatabaseReference
+    private val messageReference: DatabaseReference =
+        FirebaseDatabase.getInstance().getReference("messages")
+
+    init {
+        val childEventListener = object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                if (dataSnapshot.exists()) {
+                    val friendlyMessage: FriendlyMessage =
+                        dataSnapshot.getValue(FriendlyMessage::class.java)!!
+                    messagesArray.add(friendlyMessage)
+                    _messagesList.value = messagesArray
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {}
+        }
+        messageReference.addChildEventListener(childEventListener)
+    }
+
 
     //View Control Variables
     private val _buttonEnabled = MutableLiveData(false)
@@ -27,16 +50,11 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
 
     //Click in send button
     fun sendButtonClicked() {
-        //get the messages reference inf Firebase
-        messageReference = FirebaseDatabase.getInstance().reference
-            .child("messages")
-
         //set the friendly Message
         val friendlyMessage = FriendlyMessage(message.get(), "Jorge", null)
+
         //push the value to the database
-        //messageReference.push().setValue(friendlyMessage)
-        messagesArray.add(friendlyMessage)
-        _messagesList.value = messagesArray
+        messageReference.push().setValue(friendlyMessage)
 
         //clear the edit text
         message.set("")
