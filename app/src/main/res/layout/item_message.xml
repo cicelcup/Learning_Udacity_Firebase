@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.example.testing_firebasedb.FriendlyMessage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
