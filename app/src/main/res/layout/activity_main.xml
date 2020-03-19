@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.testing_firebasedb.MessagesVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:enabled="@{viewModel.buttonEnabled}"
+            android:onClick="@{()-> viewModel.sendButtonClicked()}"
             android:text="@string/label_send_button"
-            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -45,6 +49,7 @@
             app:srcCompat="@drawable/ic_image_24dp"
             tools:ignore="VectorDrawableCompat" />
 
+        <!--suppress AndroidUnknownAttribute -->
         <EditText
             android:id="@+id/textMessage"
             android:layout_width="wrap_content"
@@ -55,6 +60,8 @@
             android:autofillHints="@string/hint_message"
             android:ems="10"
             android:inputType="textPersonName"
+            android:text="@={viewModel.message}"
+            android:afterTextChanged="@{viewModel.textChanged}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendButton"
             app:layout_constraintStart_toEndOf="@+id/imageButton"
