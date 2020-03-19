@@ -19,7 +19,8 @@
             app:layout_constraintBottom_toTopOf="@+id/textMessage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_message" />
 
         <Button
             android:id="@+id/sendButton"
@@ -37,10 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
+            android:contentDescription="@string/image_content_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_image_24dp"
-            android:contentDescription="@string/image_content_description"
             tools:ignore="VectorDrawableCompat" />
 
         <EditText
@@ -50,12 +51,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:autofillHints="@string/hint_message"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendButton"
             app:layout_constraintStart_toEndOf="@+id/imageButton"
-            android:autofillHints="@string/hint_message"
             tools:ignore="LabelFor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
