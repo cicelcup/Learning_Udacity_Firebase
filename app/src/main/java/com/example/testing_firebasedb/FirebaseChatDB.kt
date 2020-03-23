@@ -13,28 +13,40 @@ class FirebaseChatDB() {
     private val messageReference: DatabaseReference =
         FirebaseDatabase.getInstance().getReference("messages")
 
-    init {
-        val messagesChildEventListener = object : ChildEventListener {
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.i("JAPM", "Authentication Error $databaseError")
-            }
+    private var messagesChildEventListener: ChildEventListener? = null
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
-
-            override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
-                if (dataSnapshot.exists()) {
-                    val friendlyMessage: FriendlyMessage =
-                        dataSnapshot.getValue(FriendlyMessage::class.java)!!
-                    messagesArray.add(friendlyMessage)
-                    messagesList.value = messagesArray
+    //function to add a listener to the messages
+    fun addMessagesListener() {
+        if (messagesChildEventListener == null) {
+            messagesChildEventListener = object : ChildEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.i(TAG, "$WHICH Authentication Error $databaseError")
                 }
-            }
 
-            override fun onChildRemoved(p0: DataSnapshot) {}
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
+
+                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                    if (dataSnapshot.exists() && !dbWrite) {
+                        val friendlyMessage: FriendlyMessage =
+                            dataSnapshot.getValue(FriendlyMessage::class.java)!!
+                        addMessageToList(friendlyMessage)
+                    }
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {}
+            }
+            messageReference.addChildEventListener(messagesChildEventListener as ChildEventListener)
         }
-        messageReference.addChildEventListener(messagesChildEventListener)
+    }
+
+    //function to remove the listener of messages
+    fun removeMessagesListener() {
+        if (messagesChildEventListener != null) {
+            messageReference.removeEventListener(messagesChildEventListener!!)
+            messagesChildEventListener = null
+        }
     }
 
     fun sendMessage(friendlyMessage: FriendlyMessage) {
@@ -47,5 +59,11 @@ class FirebaseChatDB() {
             )
 
         }
+    }
+
+    //Function to clean the message list
+    fun cleanMessageList() {
+        messagesArray.clear()
+        messagesList.value = messagesArray
     }
 }

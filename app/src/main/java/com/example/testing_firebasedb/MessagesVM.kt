@@ -6,12 +6,15 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Firebase variable
-    private val firebaseChatDB = FirebaseChatDB()
-
+    val firebaseChatDB = FirebaseChatDB()
     val messagesList: LiveData<List<FriendlyMessage>> = firebaseChatDB.messagesList
+
+    //Sender name variable
+    var sender: String = "Anonimo"
 
     //View Control Variables
     private val _buttonEnabled = MutableLiveData(false)
@@ -20,10 +23,19 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Observables
     val message = ObservableField<String>("")
 
+    //Authentication variable
+    val authenticationState = FirebaseUserLiveData().map { user ->
+        if (user != null) {
+            AuthenticationState.AUTHENTICATED
+        } else {
+            AuthenticationState.UNAUTHENTICATED
+        }
+    }
+
     //Click in send button
     fun sendButtonClicked() {
         //set the friendly Message
-        val friendlyMessage = FriendlyMessage(message.get(), "Jorge", null)
+        val friendlyMessage = FriendlyMessage(message.get(), sender, null)
 
         //Send Message
         firebaseChatDB.sendMessage(friendlyMessage)
