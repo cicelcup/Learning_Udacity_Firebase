@@ -33,12 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            android:textColor="@color/colorAccent"
             android:text="@{item.sender}"
+            android:textColor="@color/colorAccent"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemMessage"
+            tools:ignore="SmallSp"
             tools:text="@string/item_sender" />
 
         <ImageView
