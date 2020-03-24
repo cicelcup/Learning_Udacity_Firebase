@@ -5,9 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
 
 class FirebaseChatDB() {
+    companion object {
+        const val TAG = "JAPM"
+        const val WHICH = "FirebaseChatDB.kt -"
+    }
+
     //variables for the array
     private val messagesArray = ArrayList<FriendlyMessage>()
     val messagesList = MutableLiveData<List<FriendlyMessage>>()
+
+    //variable to check the write process
+    private var dbWrite = false
 
     //Messages Reference
     private val messageReference: DatabaseReference =
@@ -50,15 +58,23 @@ class FirebaseChatDB() {
     }
 
     fun sendMessage(friendlyMessage: FriendlyMessage) {
+        //writing the message
+        dbWrite = true
         //push the value to the database
         messageReference.push().setValue(friendlyMessage)
         { databaseError, databaseReference ->
-            Log.i(
-                "JAPM", "Error: $databaseError." +
-                        " Reference: $databaseReference"
-            )
-
+            dbWrite = false
+            if (databaseError != null) {
+                Log.i(TAG, "$WHICH $databaseError. Reference: $databaseReference")
+            } else {
+                addMessageToList(friendlyMessage)
+            }
         }
+    }
+
+    private fun addMessageToList(friendlyMessage: FriendlyMessage) {
+        messagesArray.add(friendlyMessage)
+        messagesList.value = messagesArray
     }
 
     //Function to clean the message list
