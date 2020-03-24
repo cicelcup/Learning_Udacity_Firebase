@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testing_firebasedb.databinding.ActivityMainBinding
 import com.firebase.ui.auth.AuthUI
 
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         binding.recyclerMessage.adapter = MessagesAdapter(this)
-        binding.recyclerMessage.layoutManager = LinearLayoutManager(this)
 
         viewModel.authenticationState.observe(this, Observer {
             if (it == AuthenticationState.UNAUTHENTICATED) {
