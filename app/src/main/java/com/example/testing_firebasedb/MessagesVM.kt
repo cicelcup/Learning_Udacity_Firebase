@@ -2,19 +2,21 @@ package com.example.testing_firebasedb
 
 import android.app.Application
 import android.text.Editable
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.google.firebase.auth.FirebaseAuth
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Firebase variable
-    val firebaseChatDB = FirebaseChatDB()
+    private val firebaseChatDB = FirebaseChatDB()
     val messagesList: LiveData<List<FriendlyMessage>> = firebaseChatDB.messagesList
 
     //Sender name variable
-    var sender: String = "Anonimo"
+    private lateinit var sender: String
 
     //View Control Variables
     private val _buttonEnabled = MutableLiveData(false)
@@ -26,10 +28,25 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Authentication variable
     val authenticationState = FirebaseUserLiveData().map { user ->
         if (user != null) {
+            onSignedIn()
             AuthenticationState.AUTHENTICATED
         } else {
+            onSignedOut()
             AuthenticationState.UNAUTHENTICATED
         }
+    }
+
+    private fun onSignedIn() {
+        Log.i("JAPM", "Entre al in")
+        sender = FirebaseAuth.getInstance().currentUser?.displayName ?: "Anonimo"
+        firebaseChatDB.addMessagesListener()
+    }
+
+    private fun onSignedOut() {
+        Log.i("JAPM", "Entre al out")
+        sender = "Anonimo"
+        firebaseChatDB.cleanMessageList()
+        firebaseChatDB.removeMessagesListener()
     }
 
     //Click in send button
