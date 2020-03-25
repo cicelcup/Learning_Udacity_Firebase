@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="item"
-            type="com.example.testing_firebasedb.FriendlyMessage" />
+            type="com.example.testing_firebasedb.data.FriendlyMessage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

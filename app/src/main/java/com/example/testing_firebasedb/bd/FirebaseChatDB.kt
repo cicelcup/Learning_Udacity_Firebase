@@ -1,7 +1,8 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.bd
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.testing_firebasedb.data.FriendlyMessage
 import com.google.firebase.database.*
 
 class FirebaseChatDB() {

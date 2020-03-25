@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.example.testing_firebasedb.MessagesVM" />
+            type="com.example.testing_firebasedb.mvvm.MessagesVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMessage"

@@ -1,9 +1,10 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testing_firebasedb.data.FriendlyMessage
 import com.example.testing_firebasedb.databinding.ItemMessageBinding
 
 class MessagesAdapter internal constructor(context: Context) :

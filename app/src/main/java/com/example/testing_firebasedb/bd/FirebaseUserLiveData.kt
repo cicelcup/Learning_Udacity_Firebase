@@ -1,4 +1,4 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.bd
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth

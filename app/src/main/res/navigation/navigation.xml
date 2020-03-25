@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/baseFragment"
-        android:name="com.example.testing_firebasedb.BaseFragment"
+        android:name="com.example.testing_firebasedb.ui.BaseFragment"
         android:label="BaseFragment"
         tools:layout="@layout/fragment_base" />
 </navigation>

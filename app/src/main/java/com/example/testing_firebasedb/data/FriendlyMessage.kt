@@ -1,4 +1,4 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.data
 
 data class FriendlyMessage(
     val message: String? = "",

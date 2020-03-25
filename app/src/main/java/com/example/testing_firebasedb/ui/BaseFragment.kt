@@ -1,4 +1,4 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.testing_firebasedb.adapters.MessagesAdapter
+import com.example.testing_firebasedb.data.AuthenticationState
 import com.example.testing_firebasedb.databinding.FragmentBaseBinding
+import com.example.testing_firebasedb.mvvm.MessagesVM
 import com.firebase.ui.auth.AuthUI
 
 class BaseFragment : Fragment() {
@@ -39,7 +42,8 @@ class BaseFragment : Fragment() {
             //Adding the life cycle owner
             binding.lifecycleOwner = it
         }
-        binding.recyclerMessage.adapter = MessagesAdapter(view.context)
+        binding.recyclerMessage.adapter =
+            MessagesAdapter(view.context)
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             if (authenticationState == AuthenticationState.UNAUTHENTICATED) {
                 launchAuthUI()
@@ -55,7 +59,8 @@ class BaseFragment : Fragment() {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
                 .setIsSmartLockEnabled(false)
-                .build(), SIGN_IN_RESULT_CODE
+                .build(),
+            SIGN_IN_RESULT_CODE
         )
     }
 

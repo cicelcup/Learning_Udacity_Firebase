@@ -1,4 +1,4 @@
-package com.example.testing_firebasedb
+package com.example.testing_firebasedb.mvvm
 
 import android.app.Application
 import android.text.Editable
@@ -8,6 +8,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.example.testing_firebasedb.bd.FirebaseChatDB
+import com.example.testing_firebasedb.bd.FirebaseUserLiveData
+import com.example.testing_firebasedb.data.AuthenticationState
+import com.example.testing_firebasedb.data.FriendlyMessage
 import com.google.firebase.auth.FirebaseAuth
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
@@ -26,15 +30,16 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     val message = ObservableField<String>("")
 
     //Authentication variable
-    val authenticationState = FirebaseUserLiveData().map { user ->
-        if (user != null) {
-            onSignedIn()
-            AuthenticationState.AUTHENTICATED
-        } else {
-            onSignedOut()
-            AuthenticationState.UNAUTHENTICATED
+    val authenticationState = FirebaseUserLiveData()
+        .map { user ->
+            if (user != null) {
+                onSignedIn()
+                AuthenticationState.AUTHENTICATED
+            } else {
+                onSignedOut()
+                AuthenticationState.UNAUTHENTICATED
+            }
         }
-    }
 
     private fun onSignedIn() {
         Log.i("JAPM", "Entre al in")
@@ -52,7 +57,12 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Click in send button
     fun sendButtonClicked() {
         //set the friendly Message
-        val friendlyMessage = FriendlyMessage(message.get(), sender, null)
+        val friendlyMessage =
+            FriendlyMessage(
+                message.get(),
+                sender,
+                null
+            )
 
         //Send Message
         firebaseChatDB.sendMessage(friendlyMessage)
