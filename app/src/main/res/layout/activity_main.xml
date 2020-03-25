@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.example.testing_firebasedb.MessagesVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,60 +12,16 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMessage"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:data="@{viewModel.messagesList}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:stackFromEnd="true"
-            app:layout_constraintBottom_toTopOf="@+id/textMessage"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_message" />
-
-        <Button
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:enabled="@{viewModel.buttonEnabled}"
-            android:onClick="@{()-> viewModel.sendButtonClicked()}"
-            android:text="@string/label_send_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/image_content_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_image_24dp"
-            tools:ignore="VectorDrawableCompat" />
-
-        <!--suppress AndroidUnknownAttribute -->
-        <EditText
-            android:id="@+id/textMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:afterTextChanged="@{viewModel.textChanged}"
-            android:autofillHints="@string/hint_message"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.message}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sendButton"
-            app:layout_constraintStart_toEndOf="@+id/imageButton"
-            tools:ignore="LabelFor" />
-
+            app:navGraph="@navigation/navigation" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
