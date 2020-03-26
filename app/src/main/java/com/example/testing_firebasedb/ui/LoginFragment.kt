@@ -11,7 +11,6 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 
-
 class LoginFragment : Fragment() {
 
     companion object {
@@ -19,8 +18,22 @@ class LoginFragment : Fragment() {
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        // Save the user's current score
+        savedInstanceState.putInt(TAG, 1)
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val savedInstanceStateInt = savedInstanceState?.getInt(TAG)
+
+        if (savedInstanceStateInt == null) {
+            launchAuthUI()
+        }
+    }
+
+    private fun launchAuthUI() {
         val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
         startActivityForResult(
             AuthUI.getInstance()
