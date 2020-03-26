@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.testing_firebasedb.R
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -24,6 +25,7 @@ class LoginFragment : Fragment() {
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setTheme(R.style.FirebaseUINotAnimation)
                 .setAvailableProviders(providers)
                 .setIsSmartLockEnabled(false)
                 .build(),
