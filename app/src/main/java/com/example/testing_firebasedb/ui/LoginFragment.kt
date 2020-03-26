@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -36,7 +37,10 @@ class LoginFragment : Fragment() {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
-
+                findNavController().navigate(
+                    LoginFragmentDirections
+                        .actionLoginFragmentToBaseFragment()
+                )
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 if (response == null) {
                     activity?.finish()
