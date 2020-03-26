@@ -9,15 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.testing_firebasedb.adapters.MessagesAdapter
 import com.example.testing_firebasedb.databinding.FragmentBaseBinding
 import com.example.testing_firebasedb.mvvm.MessagesVM
-import com.firebase.ui.auth.AuthUI
 
 class BaseFragment : Fragment() {
+
     private lateinit var viewModel: MessagesVM
     private lateinit var binding: FragmentBaseBinding
-
-    companion object {
-        const val SIGN_IN_RESULT_CODE = 1001
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +36,4 @@ class BaseFragment : Fragment() {
         }
         binding.recyclerMessage.adapter = MessagesAdapter(view.context)
     }
-
-    private fun launchAuthUI() {
-        val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setIsSmartLockEnabled(false)
-                .build(),
-            SIGN_IN_RESULT_CODE
-        )
-    }
-
 }
