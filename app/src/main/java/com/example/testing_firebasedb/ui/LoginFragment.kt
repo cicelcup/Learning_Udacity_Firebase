@@ -14,7 +14,7 @@ import com.firebase.ui.auth.IdpResponse
 class LoginFragment : Fragment() {
 
     companion object {
-        const val TAG = "LoginFragment"
+        const val TAG = "JAPM LoginFragment"
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
@@ -28,6 +28,8 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val savedInstanceStateInt = savedInstanceState?.getInt(TAG)
 
+        //This conditional check if the user press back button when it cancel the auth
+        //Avoiding the creation of the firebase ui
         if (savedInstanceStateInt == null) {
             launchAuthUI()
         }

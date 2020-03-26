@@ -19,7 +19,7 @@ class BaseFragment : Fragment() {
     private lateinit var binding: FragmentBaseBinding
 
     companion object {
-        const val TAG = "BaseFragment"
+        const val TAG = "JAPM BaseFragment"
     }
 
     override fun onCreateView(

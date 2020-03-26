@@ -2,7 +2,6 @@ package com.example.testing_firebasedb.mvvm
 
 import android.app.Application
 import android.text.Editable
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -33,26 +32,16 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
     val authenticationState = FirebaseUserLiveData()
         .map { user ->
             if (user != null) {
-                onSignedIn()
+                sender = FirebaseAuth.getInstance().currentUser?.displayName ?: "Anonimo"
+                firebaseChatDB.addMessagesListener()
                 AuthenticationState.AUTHENTICATED
             } else {
-                onSignedOut()
+                sender = "Anonimo"
+                firebaseChatDB.cleanMessageList()
+                firebaseChatDB.removeMessagesListener()
                 AuthenticationState.UNAUTHENTICATED
             }
         }
-
-    private fun onSignedIn() {
-        Log.i("JAPM", "Entre al in")
-        sender = FirebaseAuth.getInstance().currentUser?.displayName ?: "Anonimo"
-        firebaseChatDB.addMessagesListener()
-    }
-
-    private fun onSignedOut() {
-        Log.i("JAPM", "Entre al out")
-        sender = "Anonimo"
-        firebaseChatDB.cleanMessageList()
-        firebaseChatDB.removeMessagesListener()
-    }
 
     //Click in send button
     fun sendButtonClicked() {

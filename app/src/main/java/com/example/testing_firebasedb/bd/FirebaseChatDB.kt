@@ -7,8 +7,7 @@ import com.google.firebase.database.*
 
 class FirebaseChatDB() {
     companion object {
-        const val TAG = "JAPM"
-        const val WHICH = "FirebaseChatDB.kt -"
+        const val TAG = "JAPM FirebaseChatDB"
     }
 
     //variables for the array
@@ -29,7 +28,7 @@ class FirebaseChatDB() {
         if (messagesChildEventListener == null) {
             messagesChildEventListener = object : ChildEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Log.i(TAG, "$WHICH Authentication Error $databaseError")
+                    Log.i(TAG, "Authentication Error $databaseError")
                 }
 
                 override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
@@ -37,6 +36,7 @@ class FirebaseChatDB() {
                 override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                    //Verify that the user doesn't send any message to the chat
                     if (dataSnapshot.exists() && !dbWrite) {
                         val friendlyMessage: FriendlyMessage =
                             dataSnapshot.getValue(FriendlyMessage::class.java)!!
@@ -66,7 +66,7 @@ class FirebaseChatDB() {
         { databaseError, databaseReference ->
             dbWrite = false
             if (databaseError != null) {
-                Log.i(TAG, "$WHICH $databaseError. Reference: $databaseReference")
+                Log.i(TAG, "$databaseError. Reference: $databaseReference")
             } else {
                 addMessageToList(friendlyMessage)
             }

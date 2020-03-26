@@ -18,6 +18,8 @@
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <!--Pop up to Inclusive remove the previous fragment from the back stack -->
+        <!-- Pop up to indicate that follow the navigation definition -->
         <action
             android:id="@+id/action_homeFragment_to_baseFragment"
             app:destination="@id/baseFragment"
