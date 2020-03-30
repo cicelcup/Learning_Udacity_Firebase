@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.testing_firebasedb.adapters.MessagesAdapter
 import com.example.testing_firebasedb.data.AuthenticationState
 import com.example.testing_firebasedb.databinding.FragmentBaseBinding
@@ -46,6 +47,12 @@ class BaseFragment : Fragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             if (authenticationState == AuthenticationState.UNAUTHENTICATED) {
                 Log.i(TAG, "User not authenticated")
+                findNavController().navigate(
+                    BaseFragmentDirections
+                        .actionBaseFragmentToLoginFragment()
+                )
+            } else {
+                Log.i(TAG, "User authenticated")
             }
         })
     }

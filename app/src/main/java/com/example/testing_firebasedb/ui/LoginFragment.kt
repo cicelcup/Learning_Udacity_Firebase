@@ -5,8 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.testing_firebasedb.R
+import com.example.testing_firebasedb.mvvm.MessagesVM
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -18,6 +21,8 @@ class LoginFragment : Fragment() {
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
+    private lateinit var viewModel: MessagesVM
+
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         // Save the user's current score
         savedInstanceState.putInt(TAG, 1)
@@ -26,6 +31,18 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        activity?.let {
+            //adding the viewModel to the fragment
+            viewModel = ViewModelProvider(it)
+                .get(MessagesVM::class.java)
+        }
+
+        //This line is need just to update the authentication state after login is successful
+        viewModel.authenticationState.observe(this, Observer {
+            Log.i(TAG, "Current Auth: $it")
+        })
+
         val savedInstanceStateInt = savedInstanceState?.getInt(TAG)
 
         //This conditional check if the user press back button when it cancel the auth
