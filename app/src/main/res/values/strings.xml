@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Testing_FirebaseDB</string>
+    <string name="app_name">Test Chat</string>
     <string name="label_send_button">Send</string>
     <string name="image_content_description">Attach Image</string>
     <string name="hint_message">Message</string>
     <string name="item_message">Message</string>
     <string name="item_sender">Sender</string>
+    <string name="sign_out_label">Sign Out</string>
 </resources>
