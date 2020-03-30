@@ -12,6 +12,8 @@ import com.example.testing_firebasedb.bd.FirebaseUserLiveData
 import com.example.testing_firebasedb.data.AuthenticationState
 import com.example.testing_firebasedb.data.FriendlyMessage
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MessagesVM(application: Application) : AndroidViewModel(application) {
     //Firebase variable
@@ -45,12 +47,16 @@ class MessagesVM(application: Application) : AndroidViewModel(application) {
 
     //Click in send button
     fun sendButtonClicked() {
+        val time = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd/MM/yy 'at' hh:mm a", Locale.US)
+
         //set the friendly Message
         val friendlyMessage =
             FriendlyMessage(
                 message.get(),
                 sender,
-                null
+                null,
+                dateFormat.format(time)
             )
 
         //Send Message

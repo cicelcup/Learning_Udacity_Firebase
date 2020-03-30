@@ -5,5 +5,6 @@
     <string name="hint_message">Message</string>
     <string name="item_message">Message</string>
     <string name="item_sender">Sender</string>
+    <string name="item_date">Date</string>
     <string name="sign_out_label">Sign Out</string>
 </resources>
